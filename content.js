@@ -67,7 +67,8 @@ let content = [
                     `,
         slug:"Por-qué-la-vivienda-y-el-alquiler-son-tan-caros-en-España",
         tags: ["social"],
-        date: "23/03/2025"
+        date: "23/03/2025",
+        description: "El problema de la vivienda en España no se resolverá con medidas superficiales ni con ideologías vacías. Es necesario un cambio real en la gestión política, con soluciones prácticas que protejan a quienes trabajan y contribuyen al país. Sin acción efectiva, la situación solo empeorará, aumentando la desigualdad y la frustración de los ciudadanos."
     },
     {
         id: 1,
