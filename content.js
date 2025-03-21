@@ -70,20 +70,6 @@ let content = [
         date: "23/03/2025",
         description: "El problema de la vivienda en España no se resolverá con medidas superficiales ni con ideologías vacías. Es necesario un cambio real en la gestión política, con soluciones prácticas que protejan a quienes trabajan y contribuyen al país. Sin acción efectiva, la situación solo empeorará, aumentando la desigualdad y la frustración de los ciudadanos."
     },
-    {
-        id: 1,
-        title: "Inicio",
-        content: "Inicio",
-        slug:"Inicio",
-        tags: ["home"]
-    },
-    {
-        id: 2,
-        title: "title example 2",
-        content: "content example 2",
-        slug:"title-example-2",
-        tags: ["example"]
-    }
 ];
 
 content = content.reverse();
