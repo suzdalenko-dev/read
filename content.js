@@ -76,7 +76,7 @@ let content = [
         preview: "https://kasparov.ru/content/materials/202110/615CA28CD6257.jpg",
         content: `content 1`,
         slug:"slug-1",
-        tags: ["Desarrollo", "IA", "JavaScript", "JS"],
+        tags: ["JS", "Desarrollo", "IA", "JavaScript"],
         date: "24/03/2025",
         description: "descrip 1"
     },
