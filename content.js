@@ -73,7 +73,7 @@ let content = [
      {
         id: 1,
         title: "title 1",
-        preview: "/assets/img/0-0.webp",
+        preview: "https://kasparov.ru/content/materials/202110/615CA28CD6257.jpg",
         content: `content 1`,
         slug:"slug-1",
         tags: ["desarrollo", "ia", "social"],
