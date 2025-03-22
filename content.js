@@ -76,7 +76,7 @@ let content = [
         preview: "/assets/img/0-0.webp",
         content: `content 1`,
         slug:"slug-1",
-        tags: ["desarrollo", "ia"],
+        tags: ["desarrollo", "ia", "social"],
         date: "24/03/2025",
         description: "descrip 1"
     },
