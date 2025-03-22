@@ -13,7 +13,7 @@ let content = [
                     <br><br>
                     <h4>#2. España, paraíso del comprador extranjero</h4>
                     <br>
-                    España se ha convertido en el destino ideal para extranjeros con alto poder adquisitivo. Desde alemanes, británicos o franceses hasta fondos de inversión internacionales que ven en nuestras ciudades y costas una oportunidad dorada. ¿Consecuencia directa? Aumenta la presión sobre los precios, y el español medio, con su sueldo congelado y su bolsillo cada vez más exprimido, simplemente no puede competir.
+                    España se ha convertido en el destino ideal para extranjeros con alto poder adquisitivo. Desde alemanes, británicos o franceses hasta fondos de inversión internacionales que ven en nuestras ciudades y costas una oportunidad dorada. ¿Consecuencia directa? Aumenta la presión sobre los precios, y el español medio, con su sueldo congelado y su bolsillo cada vez más exprimido, simplemente no puede competir. Con esto no pretendo decir que hay que prohibir comprar las viviendas a un inverson extranjero, si no simplemente es un punto más que hay que tener en cuenta. Y el problema principal en esta cuestion esta que en el que el "comprador nacional" no puede competir con el "comprador extranjero" pricisamente por el bajo poder adquisitivo del "comprador nacional". 
                     <br><br>
                     <h4>#3. La inseguridad jurídica y la plaga de la ocupación</h4>
                     <br>
