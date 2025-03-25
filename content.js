@@ -74,7 +74,29 @@ let content = [
         id: 1,
         title: "Inteligencia Artificial en JavaScript",
         preview: "",
-        content: ``,
+        content: `La inteligencia artificial (IA) se ha convertido en una de las tecnologías más innovadoras en el desarrollo de software. 
+                  Para comprender su funcionamiento desde cero, vamos a implementar una red neuronal básica en JavaScript sin utilizar bibliotecas externas.
+                  <br><br>
+                  <h4>#1. Ejemplo Básico: Una Neurona Artificial en JavaScript</h4>
+                  <br>
+                  Una neurona artificial es la unidad más simple de una red neuronal. Su funcionamiento se basa en tres componentes clave:<br><br>
+                    1. Pesos (Weights): Determinan la importancia de cada entrada en la decisión final. 
+                        Son valores numéricos que multiplican la entrada antes de sumarse al resultado. Un peso alto significa que la entrada tiene más influencia en la salida.
+                    <br><br>
+                    2. Sesgo (Bias): Es un valor adicional que se suma después de la multiplicación con los pesos. 
+                        Permite ajustar la decisión de la neurona y garantizar que pueda activarse incluso cuando la entrada sea baja o cero.
+                    <br><br>
+                    3. Función de activación: Es la regla que define si la neurona se activará o no. En nuestro caso, utilizaremos una función de activación basada en un umbral simple:
+                    <br>
+                    Si la suma de la entrada multiplicada por el peso más el sesgo es menor que 0.5, la salida será 0 (neurona inactiva).
+                    <br>
+                    Si es mayor o igual a 0.5, la salida será 1 (neurona activada).
+                    
+                    
+                    
+                    
+                    
+                    `,
         slug:"",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
         date: "",
