@@ -1,3 +1,1 @@
--- indicadores produccion
--- pydrive
--- docker and spring boot
+-- the silence is gold
