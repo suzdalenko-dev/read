@@ -72,13 +72,13 @@ let content = [
     },
      {
         id: 1,
-        title: "title 1",
-        preview: "https://kasparov.ru/content/materials/202110/615CA28CD6257.jpg",
-        content: `content 1`,
-        slug:"slug-1",
+        title: "",
+        preview: "",
+        content: ``,
+        slug:"",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
-        date: "24/03/2025",
-        description: "descrip 1"
+        date: "",
+        description: ""
     },
 ];
 
