@@ -72,7 +72,7 @@ let content = [
     },
      {
         id: 1,
-        title: "",
+        title: "Inteligencia Artificial en JavaScript",
         preview: "",
         content: ``,
         slug:"",
