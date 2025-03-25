@@ -97,7 +97,7 @@ let content = [
                     
                     
                     `,
-        slug:"",
+        slug:"Inteligencia-Artificial-en-JavaScript",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
         date: "",
         description: ""
