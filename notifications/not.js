@@ -102,6 +102,6 @@
           if (msg.parentElement) {
             msg.parentElement.removeChild(msg);
           }
-        }, 11000);
+        }, 22000);
       };
     })();
