@@ -67,9 +67,9 @@
       }
 
       const titles = {
-        success: "Success",
-        error: "Error",
-        warning: "Warning"
+        success: "SUCCESS Success",
+        error: "ERROR",
+        warning: "WARNING"
       };
 
       window.showM = function (message, type = 'success') {
