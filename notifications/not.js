@@ -67,7 +67,7 @@
       }
 
       const titles = {
-        success: "SUCCESS Success",
+        success: "SUCCESS",
         error: "ERROR",
         warning: "WARNING"
       };
