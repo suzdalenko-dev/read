@@ -372,7 +372,7 @@ let content = [
         Aunque el problema puede parecer simple para un humano (basta con fijarse en el primer bit de entrada para predecir el resultado), la red no fue programada explícitamente para eso. En su lugar, la IA fue capaz de descubrir esta regla por sí sola, aprendiendo a través del entrenamiento.
         </p>
         <p>
-          ✅ En resumen, esta demostración muestra cómo una red neuronal sencilla, escrita en JavaScript, puede aprender patrones lógicos sin instrucciones explícitas. Es un claro ejemplo del poder del aprendizaje automático
+          ✅ En resumen, esta demostración muestra cómo una red neuronal sencilla, escrita en JavaScript, puede aprender patrones lógicos sin instrucciones explícitas. Es un claro ejemplo del poder del aprendizaje automático.
         </p>`,
         slug:"Inteligencia-Artificial-en-JavaScript",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
