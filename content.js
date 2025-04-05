@@ -100,7 +100,7 @@ let content = [
         slug:"Inteligencia-Artificial-en-JavaScript",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
         date: "",
-        description: "Artificial Intelligence in JavaScript"
+        description: "Artificial Intelligence in JavaScript, Pesos (Weights), Sesgo (Bias), Función de activación"
     },
 ];
 
