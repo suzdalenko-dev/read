@@ -74,32 +74,309 @@ let content = [
         id: 1,
         title: "Inteligencia Artificial en JavaScript",
         preview: "",
-        content: `La inteligencia artificial (IA) se ha convertido en una de las tecnologías más innovadoras en el desarrollo de software. 
-                  Para comprender su funcionamiento desde cero, vamos a implementar una red neuronal básica en JavaScript sin utilizar bibliotecas externas.
-                  <br><br>
-                  <h4>#1. Ejemplo Básico: Una Neurona Artificial en JavaScript</h4>
-                  <br>
-                  Una neurona artificial es la unidad más simple de una red neuronal. Su funcionamiento se basa en tres componentes clave:<br><br>
-                    1. Pesos (Weights): Determinan la importancia de cada entrada en la decisión final. 
-                        Son valores numéricos que multiplican la entrada antes de sumarse al resultado. Un peso alto significa que la entrada tiene más influencia en la salida.
-                    <br><br>
-                    2. Sesgo (Bias): Es un valor adicional que se suma después de la multiplicación con los pesos. 
-                        Permite ajustar la decisión de la neurona y garantizar que pueda activarse incluso cuando la entrada sea baja o cero.
-                    <br><br>
-                    3. Función de activación: Es la regla que define si la neurona se activará o no. En nuestro caso, utilizaremos una función de activación basada en un umbral simple:
-                    <br>
-                    Si la suma de la entrada multiplicada por el peso más el sesgo es menor que 0.5, la salida será 0 (neurona inactiva).
-                    <br>
-                    Si es mayor o igual a 0.5, la salida será 1 (neurona activada).
-                    
-                    
-                    
-                    
-                    
-                    `,
+        content: `<p>
+                    La inteligencia artificial (IA) se ha convertido en una de las tecnologías más innovadoras del desarrollo de software moderno.
+                    Pero, ¿cómo funciona realmente una red neuronal desde adentro? Para comprenderlo paso a paso, vamos a crear una red neuronal muy básica
+                    usando solo JavaScript puro —sin bibliotecas externas.
+                    </p>
+
+                    <h4>#1. Ejemplo básico: Una neurona artificial en JavaScript</h4>
+
+                    <p>
+                        Una neurona artificial es la unidad fundamental de una red neuronal. Su comportamiento puede modelarse usando tres componentes esenciales:
+                    </p>
+
+                    <ul>
+                      <li><strong>Pesos (Weights):</strong> indican la importancia de cada entrada. Son valores numéricos que multiplican a cada entrada. A mayor peso, mayor influencia.</li>
+                      <li><strong>Sesgo (Bias):</strong> es un valor adicional que se suma al resultado. Ayuda a desplazar la salida de la neurona para ajustarse mejor.</li>
+                      <li><strong>Función de activación:</strong> decide si la neurona se “activa” o no. Usaremos una función simple con un umbral de activación.</li>
+                    </ul>
+
+                    <p>
+                        En nuestro caso, si la suma ponderada de las entradas más el sesgo es menor que 0.5, la neurona estará inactiva (0).
+                        De lo contrario, estará activa (1).
+                    </p>
+
+                    <img src="https://suzdalenko-dev.github.io/ia/img/0-1.png" alt="Perceptrón" class="img-fluid" /><br><br>
+                        
+                    <p><strong>🤖 Código: Perceptrón en JavaScript (con explicación)</strong></p>
+                    <div class="vscode-header">perceptron.js</div>
+                    <div class="vscode-editor">
+                    <code>
+                    <span class="comment">// Clase que representa una neurona artificial tipo Perceptrón</span><br>
+                    <span class="keyword">class</span> <span class="variable">Perceptron</span> {<br><br>
+                    &nbsp;&nbsp;<span class="comment">// Constructor: inicializa el peso, el sesgo y la tasa de aprendizaje</span><br>
+                    &nbsp;&nbsp;<span class="method">constructor</span>() {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Peso (Weight): determina cuánta influencia tiene la entrada</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weight</span> = <span class="method">Math</span>.<span class="method">random</span>();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Sesgo (Bias): permite desplazar la función de activación</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> = <span class="method">Math</span>.<span class="method">random</span>();<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Learning rate: controla la velocidad de aprendizaje</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">learningRate</span> = <span class="number">0.1</span>;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;<span class="comment">// Función de activación:</span><br>
+                    &nbsp;&nbsp;<span class="comment">// Devuelve 1 si la suma ponderada supera el umbral (0.5), 0 en caso contrario</span><br>
+                    &nbsp;&nbsp;<span class="method">activation</span>(<span class="variable">x</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">x</span> &gt; <span class="number">0.5</span> ? <span class="number">1</span> : <span class="number">0</span>;<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;<span class="comment">// Predicción: calcula la salida del perceptrón</span><br>
+                    &nbsp;&nbsp;<span class="comment">// Suma ponderada: input * peso + sesgo</span><br>
+                    &nbsp;&nbsp;<span class="method">predict</span>(<span class="variable">input</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">sum</span> = <span class="variable">input</span> * <span class="keyword">this</span>.<span class="variable">weight</span> + <span class="keyword">this</span>.<span class="variable">bias</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="keyword">this</span>.<span class="method">activation</span>(<span class="variable">sum</span>);<br>
+                    &nbsp;&nbsp;}<br><br>
+                    &nbsp;&nbsp;<span class="comment">// Entrenamiento: ajusta peso y sesgo durante 200 épocas</span><br>
+                    &nbsp;&nbsp;<span class="method">train</span>(<span class="variable">inputs</span>, <span class="variable">labels</span>, <span class="variable">epochs</span> = <span class="number">200</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> &lt; <span class="variable">epochs</span>; <span class="variable">i</span>++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">j</span> = <span class="number">0</span>; <span class="variable">j</span> &lt; <span class="variable">inputs</span>.<span class="method">length</span>; <span class="variable">j</span>++) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">prediction</span> = <span class="keyword">this</span>.<span class="method">predict</span>(<span class="variable">inputs</span>[<span class="variable">j</span>]);<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">error</span> = <span class="variable">labels</span>[<span class="variable">j</span>] - <span class="variable">prediction</span>;<br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Ajuste del peso y del sesgo basado en el error</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weight</span> += <span class="variable">error</span> * <span class="variable">inputs</span>[<span class="variable">j</span>] * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> += <span class="variable">error</span> * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    <span class="comment">// Crear y entrenar el perceptrón</span><br>
+                    <span class="keyword">let</span> <span class="variable">perceptron</span> = <span class="keyword">new</span> <span class="variable">Perceptron</span>();<br><br>
+                    <span class="comment">// Entrenamos con datos: menores a 0.5 = 0, mayores o iguales = 1</span><br>
+                    <span class="keyword">let</span> <span class="variable">trainingInputs</span> = [<span class="number">0.1</span>, <span class="number">0.2</span>, <span class="number">0.333</span>, <span class="number">0.4</span>, <span class="number">0.5</span>, <span class="number">0.8</span>, <span class="number">0.9</span>];<br>
+                    <span class="keyword">let</span> <span class="variable">trainingLabels</span> = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>];<br><br>
+                    <span class="variable">perceptron</span>.<span class="method">train</span>(<span class="variable">trainingInputs</span>, <span class="variable">trainingLabels</span>);<br><br>
+                    <span class="comment">// Probamos el perceptrón</span><br>
+                    <span class="variable">console</span>.<span class="method">log</span>(<span class="string">"Predicción para 0.3:"</span>, <span class="variable">perceptron</span>.<span class="method">predict</span>(<span class="number">0.3</span>));<br>
+                    <span class="variable">console</span>.<span class="method">log</span>(<span class="string">"Predicción para 0.7:"</span>, <span class="variable">perceptron</span>.<span class="method">predict</span>(<span class="number">0.7</span>));<br><br>
+                    <span class="comment">// Mostrar los pesos aprendidos</span><br>
+                    <span class="variable">console</span>.<span class="method">log</span>(<span class="string">"Peso:"</span>, <span class="variable">perceptron</span>.<span class="variable">weight</span>);<br>
+                    <span class="variable">console</span>.<span class="method">log</span>(<span class="string">"Sesgo:"</span>, <span class="variable">perceptron</span>.<span class="variable">bias</span>);
+                      </code>
+                    </div>
+
+         <br>            
+        <p>
+          Resultado de la ejecución del código anterior:
+        </p>
+        <iframe width="100%" height="111px" src="https://suzdalenko-dev.github.io/ia/0.js/0.html" title="Inteligencia Artificial en JavaScript"></iframe>            
+         <p>
+          Este código nos muestra cómo funciona la inteligencia artificial utilizando una sola neurona artificial, llamada perceptrón.<br><br>
+          Primero, se entrena con ejemplos de entrada como 0.1, 0.2, 0.333, 0.4, 0.5, 0.8, y 0.9, junto con sus resultados esperados: [0, 0, 0, 0, 1, 1, 1].
+          A partir de estos datos, la IA ajusta automáticamente los pesos y el sesgo para aprender a distinguir entre valores bajos (0) y altos (1).<br><br>
+          Una vez entrenado, podemos darle nuevos valores como 0.3 y 0.7, y el perceptrón nos devolverá predicciones razonables, en este caso 0 para el valor bajo y 1 para el alto.
+        </p>            
+        <p>
+          Un lector curioso podría preguntarse:
+        </p>            
+        <p>
+          <strong>"¿Y no sería más fácil usar una simple comparación como if (x < 0.5) return 0; else return 1 en lugar de todo este entrenamiento con bucles, ajustes de pesos y demás?"
+          </strong>
+        </p>
+        <p>
+          Y justamente ahí está lo interesante.
+        </p>
+        <p>
+          El perceptrón no se limita a hacer una comparación estática. Ajusta sus propios parámetros (peso y sesgo) a partir de ejemplos reales. Aunque en el primer caso puede parecer que solo está imitando un if, en realidad está aprendiendo a generalizar una regla a partir de datos. Es decir, no le decimos directamente cómo tomar decisiones, sino que las aprende por sí mismo.
+        </p>
+        <p>
+          <strong>¿ Pero… ¿qué pasa cuando el problema no es tan simple ?</strong>
+        </p>
+        <p>
+          Para entender por qué esto es importante, vamos a construir una red un poco más avanzada. En este nuevo ejemplo usaremos 3 neuronas en la capa oculta (una para cada bit de entrada) y una neurona final que evalúa la salida combinada.
+        </p>
+        <p>
+          Vamos ahora a ver un ejemplo en el que una simple condición if no es suficiente.
+        </p>
+        <p>
+          En lugar de entradas individuales como 0.3 o 0.7, ahora trabajaremos con combinaciones binarias de tres valores. Esto genera una lógica más compleja, donde no basta con comparar un solo número para tomar una decisión. Observa los siguientes ejemplos de entrenamiento: <br>
+          000 → resultado: 0  <br>
+          001 → resultado: 0  <br>
+          010 → resultado: 0  <br>
+          100 → resultado: 1  <br>
+          110 → resultado: 1  <br>
+          111 → resultado: 1  <br>
+        </p>
+        <p>
+          Como puedes ver, no hay un solo valor que puedas comparar con un umbral para decidir entre 0 o 1. No podríamos escribir simplemente if (x < 0.5) porque x ahora es un conjunto de bits, y la respuesta depende de cómo interactúan entre ellos.
+        </p>
+        <h6>🧠 ¿Cómo lo resolvemos entonces?</h6>
+        <p>
+          Para este caso, vamos a construir una red neuronal multicapa: <br>
+            🔹 Una primera capa compuesta por 3 neuronas, cada una especializada en uno de los bits de entrada. <br>
+            🔹 Una segunda capa con una sola neurona de salida, que recibe las salidas de las 3 anteriores y toma la decisión final. <br>
+            🔹 Y en lugar de una función if, usamos una función de activación sigmoide: <br>
+            <strong>return 1 / (1 + Math.exp(-x)); </strong><br>
+            Esta función es más suave, permite valores intermedios entre 0 y 1, y hace que el aprendizaje sea mucho más realista y útil.
+        </p>
+        <p>
+          Con este enfoque, la red aprende a combinar patrones entre los distintos bits de entrada y a sacar conclusiones, incluso sobre datos que no ha visto nunca.
+        </p>
+        <p>
+          Este tipo de arquitectura, aunque sencilla, es mucho más poderosa que un if, porque representa la esencia de cómo una inteligencia artificial aprende a pensar por sí sola a partir de ejemplos.
+        </p>
+
+        <img src="https://suzdalenko-dev.github.io/ia/img/1-1.png" alt="Red neuronal de 3 neuronas" class="img-fluid" /><br><br>
+
+        <p><strong>🤖 Código: Red neuronal multicapa en JavaScript (con explicación)</strong></p>
+        <div class="vscode-header">neurona.js</div>
+        <div class="vscode-editor">
+        <code>
+        <span class="comment">// Datos de entrada y etiquetas</span><br>
+        <span class="keyword">const</span> <span class="variable">inputs</span> = [<br>
+        &nbsp;&nbsp;[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],<br>
+        &nbsp;&nbsp;[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>],<br>
+        &nbsp;&nbsp;[<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],<br>
+        &nbsp;&nbsp;[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],<br>
+        &nbsp;&nbsp;[<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>],<br>
+        &nbsp;&nbsp;[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]<br>
+        ];<br>
+        <span class="keyword">const</span> <span class="variable">labels</span> = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>];<br><br>
+        <span class="comment">// Neurona individual con función sigmoide</span><br>
+        <span class="keyword">class</span> <span class="variable">Neurona</span> {<br>
+        &nbsp;&nbsp;<span class="method">constructor</span>(<span class="variable">nombre</span> = <span class="string">""</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weight</span> = <span class="method">Math</span>.<span class="method">random</span>();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> = <span class="method">Math</span>.<span class="method">random</span>();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">learningRate</span> = <span class="number">0.1</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">nombre</span> = <span class="variable">nombre</span>;<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="method">activation</span>(<span class="variable">x</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + <span class="method">Math</span>.<span class="method">exp</span>(-<span class="variable">x</span>));<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="method">raw</span>(<span class="variable">input</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="variable">input</span> * <span class="keyword">this</span>.<span class="variable">weight</span> + <span class="keyword">this</span>.<span class="variable">bias</span>;<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="method">predict</span>(<span class="variable">input</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="keyword">this</span>.<span class="method">activation</span>(<span class="keyword">this</span>.<span class="method">raw</span>(<span class="variable">input</span>));<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="method">train</span>(<span class="variable">inputs</span>, <span class="variable">labels</span>, <span class="variable">epochs</span> = <span class="number">10</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> &lt; <span class="variable">epochs</span>; <span class="variable">i</span>++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">j</span> = <span class="number">0</span>; <span class="variable">j</span> &lt; <span class="variable">inputs</span>.<span class="method">length</span>; <span class="variable">j</span>++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">output</span> = <span class="keyword">this</span>.<span class="method">predict</span>(<span class="variable">inputs</span>[<span class="variable">j</span>]);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">error</span> = <span class="variable">labels</span>[<span class="variable">j</span>] - <span class="variable">output</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">gradient</span> = <span class="variable">output</span> * (<span class="number">1</span> - <span class="variable">output</span>);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weight</span> += <span class="variable">error</span> * <span class="variable">gradient</span> * <span class="variable">inputs</span>[<span class="variable">j</span>] * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> += <span class="variable">error</span> * <span class="variable">gradient</span> * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="method">info</span>() {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">console</span>.<span class="method">log</span>(<span class="keyword">this</span>.<span class="variable">nombre</span>);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">console</span>.<span class="method">log</span>(<span class="string">"  Peso:"</span>, <span class="keyword">this</span>.<span class="variable">weight</span>.<span class="method">toFixed</span>(<span class="number">3</span>));<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="variable">console</span>.<span class="method">log</span>(<span class="string">"  Bias:"</span>, <span class="keyword">this</span>.<span class="variable">bias</span>.<span class="method">toFixed</span>(<span class="number">3</span>));<br>
+        &nbsp;&nbsp;}<br>
+        }<br>
+        <span class="comment">// Clase que representa la neurona de salida con múltiples entradas</span><br>
+        <span class="keyword">class</span> <span class="variable">NeuronaSalida</span> {<br>
+        &nbsp;&nbsp;<span class="method">constructor</span>(<span class="variable">numEntradas</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Inicializa pesos y bias aleatoriamente</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weights</span> = <span class="method">Array</span>.<span class="method">from</span>({ length: <span class="variable">numEntradas</span> }, () => <span class="method">Math</span>.<span class="method">random</span>());<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> = <span class="method">Math</span>.<span class="method">random</span>();<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">learningRate</span> = <span class="number">0.1</span>;<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="comment">// Función de activación: sigmoide</span><br>
+        &nbsp;&nbsp;<span class="method">activation</span>(<span class="variable">x</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + <span class="method">Math</span>.<span class="method">exp</span>(-<span class="variable">x</span>));<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="comment">// Predicción a partir de salidas ocultas</span><br>
+        &nbsp;&nbsp;<span class="method">predict</span>(<span class="variable">hiddenOutputs</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">sum</span> = <span class="variable">hiddenOutputs</span>.<span class="method">reduce</span>((<span class="variable">acc</span>, <span class="variable">h</span>, <span class="variable">i</span>) => <span class="variable">acc</span> + <span class="variable">h</span> * <span class="keyword">this</span>.<span class="variable">weights</span>[<span class="variable">i</span>], <span class="number">0</span>) + <span class="keyword">this</span>.<span class="variable">bias</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="keyword">this</span>.<span class="method">activation</span>(<span class="variable">sum</span>);<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="comment">// Entrenamiento de la neurona de salida</span><br>
+        &nbsp;&nbsp;<span class="method">train</span>(<span class="variable">hiddenOutputsList</span>, <span class="variable">labels</span>, <span class="variable">epochs</span> = <span class="number">10</span>) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">epoch</span> = <span class="number">0</span>; <span class="variable">epoch</span> &lt; <span class="variable">epochs</span>; <span class="variable">epoch</span>++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">0</span>; <span class="variable">i</span> &lt; <span class="variable">hiddenOutputsList</span>.<span class="method">length</span>; <span class="variable">i</span>++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">output</span> = <span class="keyword">this</span>.<span class="method">predict</span>(<span class="variable">hiddenOutputsList</span>[<span class="variable">i</span>]);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">error</span> = <span class="variable">labels</span>[<span class="variable">i</span>] - <span class="variable">output</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">let</span> <span class="variable">gradient</span> = <span class="variable">output</span> * (<span class="number">1</span> - <span class="variable">output</span>);<br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Ajustar los pesos</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">j</span> = <span class="number">0</span>; <span class="variable">j</span> &lt; <span class="keyword">this</span>.<span class="variable">weights</span>.<span class="property">length</span>; <span class="variable">j</span>++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">weights</span>[<span class="variable">j</span>] += <span class="variable">error</span> * <span class="variable">gradient</span> * <span class="variable">hiddenOutputsList</span>[<span class="variable">i</span>][<span class="variable">j</span>] * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Ajustar el sesgo</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="variable">bias</span> += <span class="variable">error</span> * <span class="variable">gradient</span> * <span class="keyword">this</span>.<span class="variable">learningRate</span>;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;}<br><br>
+        &nbsp;&nbsp;<span class="comment">// Mostrar información de la neurona</span><br>
+        &nbsp;&nbsp;<span class="method">info</span>() {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="method">console</span>.<span class="method">log</span>(<span class="string">"⚙️ Neurona de salida:"</span>);<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="method">console</span>.<span class="method">log</span>(<span class="string">"  Pesos:"</span>, <span class="keyword">this</span>.<span class="variable">weights</span>.<span class="method">map</span>(<span class="variable">w</span> => <span class="variable">w</span>.<span class="method">toFixed</span>(<span class="number">3</span>)).<span class="method">join</span>(<span class="string">", "</span>));<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="method">console</span>.<span class="method">log</span>(<span class="string">"  Bias:"</span>, <span class="keyword">this</span>.<span class="variable">bias</span>.<span class="method">toFixed</span>(<span class="number">3</span>));<br>
+        &nbsp;&nbsp;}<br>
+        }<br><br>
+        <span class="method">console</span>.<span class="method">log</span>(<span class="string">"📥 Datos de entrenamiento:"</span>);<br>
+        <span class="variable">inputs</span>.<span class="method">forEach</span>((<span class="variable">input</span>, <span class="variable">i</span>) => {<br>
+        &nbsp;&nbsp;<span class="method">console</span>.<span class="method">log</span>(<span class="string">  Input: [input.join(", ")}] → Label: labels[i]}</span>);<br>
+        });<br><br>
+        <span class="comment">// Capa oculta con 3 neuronas (una por cada bit de entrada)</span><br>
+        <span class="keyword">const</span> <span class="variable">oculta1</span> = <span class="keyword">new</span> <span class="class">Neurona</span>(<span class="string">"Oculta 1"</span>);<br>
+        <span class="keyword">const</span> <span class="variable">oculta2</span> = <span class="keyword">new</span> <span class="class">Neurona</span>(<span class="string">"Oculta 2"</span>);<br>
+        <span class="keyword">const</span> <span class="variable">oculta3</span> = <span class="keyword">new</span> <span class="class">Neurona</span>(<span class="string">"Oculta 3"</span>);<br><br>
+        <span class="keyword">const</span> <span class="variable">entradasPorNeurona</span> = [<br>
+        &nbsp;&nbsp;<span class="variable">inputs</span>.<span class="method">map</span>(<span class="variable">i</span> => <span class="variable">i</span>[<span class="number">0</span>]),<br>
+        &nbsp;&nbsp;<span class="variable">inputs</span>.<span class="method">map</span>(<span class="variable">i</span> => <span class="variable">i</span>[<span class="number">1</span>]),<br>
+        &nbsp;&nbsp;<span class="variable">inputs</span>.<span class="method">map</span>(<span class="variable">i</span> => <span class="variable">i</span>[<span class="number">2</span>])<br>
+        ];<br><br>
+        <span class="variable">oculta1</span>.<span class="method">train</span>(<span class="variable">entradasPorNeurona</span>[<span class="number">0</span>], <span class="variable">labels</span>, <span class="number">1000</span>);<br>
+        <span class="variable">oculta2</span>.<span class="method">train</span>(<span class="variable">entradasPorNeurona</span>[<span class="number">1</span>], <span class="variable">labels</span>, <span class="number">1000</span>);<br>
+        <span class="variable">oculta3</span>.<span class="method">train</span>(<span class="variable">entradasPorNeurona</span>[<span class="number">2</span>], <span class="variable">labels</span>, <span class="number">1000</span>);<br><br>
+        <span class="keyword">const</span> <span class="variable">hiddenOutputs</span> = <span class="variable">inputs</span>.<span class="method">map</span>(<span class="variable">input</span> => [<br>
+        &nbsp;&nbsp;<span class="variable">oculta1</span>.<span class="method">predict</span>(<span class="variable">input</span>[<span class="number">0</span>]),<br>
+        &nbsp;&nbsp;<span class="variable">oculta2</span>.<span class="method">predict</span>(<span class="variable">input</span>[<span class="number">1</span>]),<br>
+        &nbsp;&nbsp;<span class="variable">oculta3</span>.<span class="method">predict</span>(<span class="variable">input</span>[<span class="number">2</span>])<br>
+        ]);<br><br>
+        <span class="keyword">const</span> <span class="variable">salida</span> = <span class="keyword">new</span> <span class="class">NeuronaSalida</span>(<span class="number">3</span>);<br>
+        <span class="variable">salida</span>.<span class="method">train</span>(<span class="variable">hiddenOutputs</span>, <span class="variable">labels</span>, <span class="number">1000</span>);<br><br>
+        <span class="keyword">function</span> <span class="method">predecir</span>(<span class="variable">binArray</span>) {<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">h1</span> = <span class="variable">oculta1</span>.<span class="method">predict</span>(<span class="variable">binArray</span>[<span class="number">0</span>]);<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">h2</span> = <span class="variable">oculta2</span>.<span class="method">predict</span>(<span class="variable">binArray</span>[<span class="number">1</span>]);<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">h3</span> = <span class="variable">oculta3</span>.<span class="method">predict</span>(<span class="variable">binArray</span>[<span class="number">2</span>]);<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">output</span> = <span class="variable">salida</span>.<span class="method">predict</span>([<span class="variable">h1</span>, <span class="variable">h2</span>, <span class="variable">h3</span>]);<br>
+        &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">clasificacion</span> = <span class="variable">output</span> &gt; <span class="number">0.5</span> ? <span class="number">1</span> : <span class="number">0</span>;<br>
+        }<br><br>
+        <span class="comment">// Pruebas con nuevos datos</span><br>
+        <span class="method">console</span>.<span class="method">log</span>(<span class="string">"\n🧪 Pruebas con datos no vistos:"</span>);<br>
+        <span class="method">predecir</span>([<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>]); <span class="comment">// 011</span><br>
+        <span class="method">predecir</span>([<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]); <span class="comment">// 101</span><br><br>
+        <span class="comment">// Info de las neuronas</span><br>
+        <span class="method">console</span>.<span class="method">log</span>(<span class="string">"\nℹ️ Pesos y sesgos finales:"</span>);<br>
+        <span class="variable">oculta1</span>.<span class="method">info</span>();<br>
+        <span class="variable">oculta2</span>.<span class="method">info</span>();<br>
+        <span class="variable">oculta3</span>.<span class="method">info</span>();<br>
+        <span class="variable">salida</span>.<span class="method">info</span>();<br>
+        </code>
+        </div>
+        <p>
+          Resultado de la ejecución del código anterior:
+        </p>
+        <iframe width="100%" height="411px" src="https://suzdalenko-dev.github.io/ia/0.js/1.html" title="Inteligencia Artificial en JavaScript"></iframe>   
+        <p>
+          📊 Resultados del entrenamiento y prueba de la red neuronal:
+          <br>
+          Después de entrenar nuestra red neuronal en JavaScript con los siguientes datos:
+          Input: [0, 0, 0] → resultado: 0  <br>
+          Input: [0, 0, 1] → resultado: 0  <br>
+          Input: [0, 1, 0] → resultado: 0  <br>
+          Input: [1, 0, 0] → resultado: 1  <br>
+          Input: [1, 1, 0] → resultado: 1  <br>
+          Input: [1, 1, 1] → resultado: 1  <br><br>
+          La inteligencia artificial fue capaz de generalizar el patrón correctamente. Al presentarle entradas no vistas previamente, como:<br>
+          Input: [0, 1, 1] → Oculta: [0.08, 0.67, 0.50] → Salida: 0 (confianza: 0.091)  <br>
+          Input: [1, 0, 1] → Oculta: [0.93, 0.33, 0.50] → Salida: 1 (confianza: 0.922)  <br><br>
+          la IA respondió con precisión y gran confianza.
+        </p>
+        <p>
+        🧠 ¿Qué significa esto?
+        </p>
+        <p>
+        Aunque el problema puede parecer simple para un humano (basta con fijarse en el primer bit de entrada para predecir el resultado), la red no fue programada explícitamente para eso. En su lugar, la IA fue capaz de descubrir esta regla por sí sola, aprendiendo a través del entrenamiento.
+        </p>
+        <p>
+          ✅ En resumen, esta demostración muestra cómo una red neuronal sencilla, escrita en JavaScript, puede aprender patrones lógicos sin instrucciones explícitas. Es un claro ejemplo del poder del aprendizaje automático
+        </p>`,
         slug:"Inteligencia-Artificial-en-JavaScript",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
-        date: "",
+        date: "06/04/2025",
         description: "Artificial Intelligence in JavaScript, Pesos (Weights), Sesgo (Bias), Función de activación"
     },
 ];
