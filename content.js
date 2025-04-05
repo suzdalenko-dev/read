@@ -73,7 +73,7 @@ let content = [
      {
         id: 1,
         title: "Inteligencia Artificial en JavaScript",
-        preview: "",
+        preview: "https://suzdalenko-dev.github.io/ia/img/1-3.png",
         content: `<p>
                     La inteligencia artificial (IA) se ha convertido en una de las tecnologías más innovadoras del desarrollo de software moderno.
                     Pero, ¿cómo funciona realmente una red neuronal desde adentro? Para comprenderlo paso a paso, vamos a crear una red neuronal muy básica
