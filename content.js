@@ -388,10 +388,10 @@ let content = [
     },
      {
         id: 3,
-        title: "Autentificacion con JWT Token en Python Django",
-        preview: "Autentificacion con JWT Token en Python Django",
-        content: `Autentificacion con JWT Token en Python Django`,
-        slug:"JWT-Token",
+        title: "Autentificación con JWT Token en Python Django",
+        preview: "Autentificación con JWT Token en Python Django",
+        content: `Autentificación con JWT Token en Python Django`,
+        slug:"Python-Django-JWT-Token",
         tags: ["JWT", "Python", "Django", "Autentificación"],
         date: "23/03/2025",
         description: "Autentificacion con JWT Token en Python Django"
