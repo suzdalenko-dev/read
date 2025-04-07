@@ -386,6 +386,16 @@ let content = [
         date: "06/04/2025",
         description: `En este artículo, construimos una neurona artificial básica en JavaScript, entendiendo los conceptos clave de pesos, sesgos y funciones de activación. Hemos visto que el perceptrón puede aprender por sí solo a partir de datos, sin necesidad de que le demos reglas explícitas. La inteligencia artificial, en su núcleo, es una función matemática que transforma entradas en salidas mediante una serie de cálculos. En las redes neuronales, esto implica multiplicar cada entrada por un peso, sumar un sesgo y aplicar una función de activación para obtener una decisión. A través del aprendizaje, estos valores se ajustan automáticamente para mejorar la precisión del modelo.`
     },
+     {
+        id: 3,
+        title: "Autentificacion con JWT Token en Python Django",
+        preview: "Autentificacion con JWT Token en Python Django",
+        content: `Autentificacion con JWT Token en Python Django`,
+        slug:"JWT-Token",
+        tags: ["JWT", "Python", "Django", "Autentificación"],
+        date: "23/03/2025",
+        description: "Autentificacion con JWT Token en Python Django"
+    },
 ];
 
 content = content.reverse();
