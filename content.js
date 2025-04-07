@@ -393,7 +393,7 @@ let content = [
         content: `Autentificación con JWT Token en Python Django`,
         slug:"Python-Django-JWT-Token",
         tags: ["JWT", "Python", "Django", "Autentificación"],
-        date: "23/03/2025",
+        date: "../../....",
         description: "Autentificacion con JWT Token en Python Django"
     },
 ];
