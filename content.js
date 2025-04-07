@@ -87,16 +87,23 @@ let content = [
                     </p>
 
                     <ul>
-                      <li><strong>Pesos (Weights):</strong> indican la importancia de cada entrada. Son valores numéricos que multiplican a cada entrada. A mayor peso, mayor influencia.</li>
-                      <li><strong>Sesgo (Bias):</strong> es un valor adicional que se suma al resultado. Ayuda a desplazar la salida de la neurona para ajustarse mejor.</li>
-                      <li><strong>Función de activación:</strong> decide si la neurona se “activa” o no. Usaremos una función simple con un umbral de activación.</li>
+                      <li><strong>📌 Pesos (Weights):</strong>Los pesos determinan la influencia de cada entrada en la neurona. Son valores numéricos que multiplican las entradas. <br>
+                          👉 Ejemplo: <br>
+                          Si tienes una entrada x = 0.3 y un peso w=0.8, el resultado ponderado será: <br>
+                          x × w = 0.3 × 0.8 = 0.24 <br>
+                          Un peso alto significa que la entrada tiene más impacto en la salida de la neurona. <br>
+                      </li>
+                      <li><strong>📌 2. Sesgo (Bias):</strong> El sesgo es un número que se suma al cálculo final de la neurona. Permite desplazar la función de activación para que la neurona pueda responder mejor a diferentes casos. <br>
+                          👉 Ejemplo: <br>
+                          Si la salida ponderada es 0.24 y el sesgo es 0.1, entonces: <br>
+                          0.24 + 0.1 = 0.34 <br>
+                          El sesgo ayuda a la neurona a no depender exclusivamente de las entradas y a tomar decisiones más flexibles. <br>
+                      </li>
+                      <li><strong>📌 3. Función de activación:</strong> Esta función decide si la neurona se "activa" o no. En este caso, usaremos un umbral simple: <br>
+                          Si el valor es menor que 0.5, la neurona devuelve 0; de lo contrario, devuelve 1. <br>
+                          function activation(x) { return x < 0.5 ? 0 : 1; } <br><br>
+                      </li>
                     </ul>
-
-                    <p>
-                        En nuestro caso, si la suma ponderada de las entradas más el sesgo es menor que 0.5, la neurona estará inactiva (0).
-                        De lo contrario, estará activa (1).
-                    </p>
-
                     <img src="https://suzdalenko-dev.github.io/ia/img/0-1.png" alt="Perceptrón" class="img-fluid" /><br><br>
                         
                     <p><strong>🤖 Código: Perceptrón en JavaScript (con explicación)</strong></p>
@@ -377,7 +384,8 @@ let content = [
         slug:"Inteligencia-Artificial-en-JavaScript",
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
         date: "06/04/2025",
-        description: "Artificial Intelligence in JavaScript, Pesos (Weights), Sesgo (Bias), Función de activación."
+        description: `En este artículo, construimos una neurona artificial básica en JavaScript, entendiendo los conceptos clave de pesos, sesgos y funciones de activación. <br>
+                        Hemos visto que el perceptrón puede aprender por sí solo a partir de datos, sin necesidad de que le demos reglas explícitas.`
     },
 ];
 
