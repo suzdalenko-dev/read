@@ -68,11 +68,7 @@
         document.body.appendChild(container);
       }
 
-      const titles = {
-        success: "SUCCESS",
-        error: "ERROR",
-        warning: "WARNING"
-      };
+      const titles = { success: "SUCCESS", error: "ERROR", warning: "WARNING" };
 
       window.showM = function (message, type = 'success') {
         const msg = document.createElement('div');
@@ -100,10 +96,6 @@
         msg.appendChild(content);
         container.appendChild(msg);
 
-        setTimeout(() => {
-          if (msg.parentElement) {
-            msg.parentElement.removeChild(msg);
-          }
-        }, 22000);
+        setTimeout(() => { if (msg.parentElement) { msg.parentElement.removeChild(msg); }; }, 22000);
       };
     })();
