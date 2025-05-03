@@ -29,7 +29,7 @@
           position: relative;
           pointer-events: auto;
           min-width: 280px;
-          max-width: 600px;
+          max-width: 700px;
         }
 
         .messageBox .title {
