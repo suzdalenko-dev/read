@@ -28,6 +28,8 @@
           animation: fadeInOut 11s ease-in-out forwards;
           position: relative;
           pointer-events: auto;
+          min-width: 280px;
+          max-width: 600px;
         }
 
         .messageBox .title {
