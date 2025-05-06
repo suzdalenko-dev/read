@@ -396,6 +396,59 @@ let content = [
         date: "../../....",
         description: "Autentificacion con JWT Token en Python Django"
     },
+    {
+    id: 3,
+    title: "IVA – herramienta silenciosa",
+    preview: "https://suzdalenko-dev.github.io/ia/img/2-0.png",
+    content: `
+        <h3>Cómo el IVA se convirtió en una herramienta silenciosa para asfixiar la economía española</h3>
+        <br>
+        Desde que el IVA se implantó en España en 1986 bajo el gobierno del PSOE, este impuesto indirecto ha sido una fuente estable de recaudación... pero también una forma cada vez más silenciosa de apretar el bolsillo del ciudadano común.
+        <br><br>
+        <strong>¿Qué ha pasado desde entonces?</strong><br>
+        El IVA ha pasado del 12% original a un 21% en la actualidad, con subidas progresivas aplicadas por gobiernos tanto del PSOE como del PP. Y lo peor es que esas subidas afectan igual al que cobra 1.000 € que al que cobra 10.000 €. Porque el IVA lo pagamos todos... y cuanto menos tienes, más te duele.
+        <br><br>
+        <img src="/assets/img/iva-subida.png" alt="Subida del IVA" class="img-fluid" /><br><br>
+
+        <h4>#1. Un impuesto regresivo que castiga a los que menos tienen</h4>
+        Mientras los grandes capitales encuentran formas de evadir o aplazar impuestos, el IVA te lo quitan directamente en la caja del supermercado. ¿Compras leche, luz, transporte o productos básicos? Paga. ¿Te suben el IVA? No puedes esquivarlo. Es automático. Es diario.
+        <br><br>
+
+        <h4>#2. Una herramienta de recaudación fácil para gobiernos sin reformas</h4>
+        Ningún gobierno ha tenido el valor de revertir una subida de IVA. Es cómodo: recaudas más sin tocar a los ricos ni luchar contra el fraude fiscal. Pero eso sí, aprietas a quien trabaja, consume y cumple.
+        <br><br>
+
+        <h4>#3. ¿Dónde están los servicios a cambio?</h4>
+        Pagamos como si viviéramos en Suiza, pero tenemos listas de espera eternas, transporte colapsado y educación infrafinanciada. ¿Qué hace el Estado con ese IVA? ¿Se invierte realmente en lo que necesitamos o se pierde entre despachos, cargos públicos y chiringuitos?
+        <br><br>
+
+        <h4>#4. El IVA como síntoma de una clase política mediocre</h4>
+        Subir el IVA ha sido el recurso fácil de una política sin ideas. Lo han hecho los socialistas, lo han hecho los populares. ¿Y mientras? La economía se enfría, el consumo cae, los autónomos sufren y el pequeño comercio cierra.
+        <br><br>
+
+        <img src="/assets/img/iva-factura.webp" alt="Factura con IVA" class="img-fluid" /><br><br>
+
+        <h3>¿Qué se podría hacer?</h3>
+        <ul>
+          <li>✅ Bajar el IVA de los productos esenciales.</li>
+          <li>✅ Devolver parte del IVA a los salarios bajos vía deducciones o compensaciones.</li>
+          <li>✅ Combatir el fraude fiscal en serio y no con campañas de marketing.</li>
+          <li>✅ Hacer una reforma tributaria justa, donde pague más quien más tiene, no quien más consume.</li>
+        </ul>
+        <br>
+
+        <h3>Conclusión: un país que vive del IVA se está empobreciendo en silencio</h3>
+        <br>
+        Porque cada euro que pagas en IVA, es un euro menos que puedes ahorrar, invertir o disfrutar. Y cuando todo sube menos tu sueldo, el IVA no es solo un impuesto... es una forma de hundir la economía de los que mantienen en pie este país.
+        <br><br>
+        Ya es hora de exigir una fiscalidad que no castigue al trabajador. Porque el verdadero progreso no se mide por cuánto recauda Hacienda, sino por cuánta dignidad puede tener la gente con lo que gana.
+    `,
+    slug: "IVA-herramienta-silenciosa",
+    tags: ["Fiscalidad", "IVA", "Política económica"],
+    date: "06/05/2025",
+    description: "Subida tras subida, el IVA se ha convertido en una forma silenciosa de ahogar al consumidor medio en España. Este artículo expone cómo la herramienta fiscal preferida de todos los gobiernos está asfixiando a quienes más contribuyen al país."
+}
+
 ];
 
 content = content.reverse();
