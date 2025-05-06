@@ -396,17 +396,24 @@ let content = [
         date: "../../....",
         description: "Autentificacion con JWT Token en Python Django"
     },
-    {
+   {
     id: 3,
     title: "IVA – herramienta silenciosa",
-    preview: "https://suzdalenko-dev.github.io/ia/img/2-0.png",
+    preview: "https://suzdalenko-dev.github.io/ia/img/3-0.png",
     content: `
+        <h3>Cómo el PSOE —el partido “pro obrero”— fue el primero en hacer más pobre al obrero con el IVA</h3>
+        <br>
+        En 1986, el PSOE, ese mismo partido que se llena la boca con la igualdad y los derechos de los trabajadores, fue el primero en imponer **un nuevo impuesto al consumo: el IVA**. Lo hizo “por Europa”, dicen. Pero el resultado fue que, de un día para otro, **todos los españoles pasaron a ser un 11% más pobres**. Porque eso es lo que implica un 11% de IVA: perder poder adquisitivo sin discusión.  
+        <br><br>
+        Y desde entonces, lejos de corregirlo o eliminarlo, el PSOE (y también el PP) **han subido ese impuesto una y otra vez**, sin vergüenza alguna. Todo sea —dicen— por la clase trabajadora. Aunque a la vista está quién paga realmente la fiesta.
+
+        <br><br>
         <h3>Cómo el IVA se convirtió en una herramienta silenciosa para asfixiar la economía española</h3>
         <br>
-        Desde que el IVA se implantó en España en 1986 bajo el gobierno del PSOE, este impuesto indirecto ha sido una fuente estable de recaudación... pero también una forma cada vez más silenciosa de apretar el bolsillo del ciudadano común.
+        Desde que el IVA se implantó, ha sido una fuente estable de recaudación... pero también una forma silenciosa de apretar el bolsillo del ciudadano común. 
         <br><br>
         <strong>¿Qué ha pasado desde entonces?</strong><br>
-        El IVA ha pasado del 12% original a un 21% en la actualidad, con subidas progresivas aplicadas por gobiernos tanto del PSOE como del PP. Y lo peor es que esas subidas afectan igual al que cobra 1.000 € que al que cobra 10.000 €. Porque el IVA lo pagamos todos... y cuanto menos tienes, más te duele.
+        El IVA ha pasado del 12% original a un 21% en la actualidad, con subidas aplicadas tanto por el PSOE como por el PP. Y lo peor es que esas subidas afectan igual al que cobra 1.000 € que al que cobra 10.000 €. Porque el IVA lo pagamos todos... y cuanto menos tienes, más te duele.
         <br><br>
         <img src="/assets/img/iva-subida.png" alt="Subida del IVA" class="img-fluid" /><br><br>
 
@@ -426,14 +433,20 @@ let content = [
         Subir el IVA ha sido el recurso fácil de una política sin ideas. Lo han hecho los socialistas, lo han hecho los populares. ¿Y mientras? La economía se enfría, el consumo cae, los autónomos sufren y el pequeño comercio cierra.
         <br><br>
 
-        <img src="/assets/img/iva-factura.webp" alt="Factura con IVA" class="img-fluid" /><br><br>
+        <h4>#5. El coste oculto del IVA: una trituradora de tiempo y dinero para las empresas</h4>
+        Si todo esto fuera poco, está el coste oculto que nadie menciona: el coste de gestionar el IVA. En España, miles de pymes y autónomos pierden horas y recursos cada trimestre preparando declaraciones, controlando facturas, soportando inspecciones y adaptándose a cambios legislativos constantes.
+        <br><br>
+        Y cada vez que el gobierno decide cambiar un tipo impositivo, modificar la normativa o lanzar una nueva campaña de “simplificación fiscal”, las empresas deben rehacer programas, pagar asesores, reconfigurar sistemas y volver a empezar. Resultado: decenas de millones de euros y horas de trabajo literalmente tiradas a la basura. No se produce más. No se vende más. Solo se mueve papel y se entierra riqueza nacional en burocracia.
+        <br><br>
+
+        <img src="https://suzdalenko-dev.github.io/ia/img/3-0.png" alt="Factura con IVA" class="img-fluid" /><br><br>
 
         <h3>¿Qué se podría hacer?</h3>
         <ul>
           <li>✅ Bajar el IVA de los productos esenciales.</li>
           <li>✅ Devolver parte del IVA a los salarios bajos vía deducciones o compensaciones.</li>
           <li>✅ Combatir el fraude fiscal en serio y no con campañas de marketing.</li>
-          <li>✅ Hacer una reforma tributaria justa, donde pague más quien más tiene, no quien más consume.</li>
+          <li>✅ Hacer una reforma tributaria justa, donde todos paguen lo mismo en proporción, sin castigar a quien más trabaja o emprende. El esfuerzo no debe penalizarse con más impuestos, sino valorarse. En una economía sana, el autónomo y el empresario que tiran del país no deberían pagar por encima de su peso, sino tener estabilidad, reglas claras y un Estado que no los trate como enemigos.</li>
         </ul>
         <br>
 
@@ -441,13 +454,14 @@ let content = [
         <br>
         Porque cada euro que pagas en IVA, es un euro menos que puedes ahorrar, invertir o disfrutar. Y cuando todo sube menos tu sueldo, el IVA no es solo un impuesto... es una forma de hundir la economía de los que mantienen en pie este país.
         <br><br>
-        Ya es hora de exigir una fiscalidad que no castigue al trabajador. Porque el verdadero progreso no se mide por cuánto recauda Hacienda, sino por cuánta dignidad puede tener la gente con lo que gana.
+        Ya es hora de exigir una fiscalidad que no castigue al trabajador ni al emprendedor. Porque el verdadero progreso no se mide por cuánto recauda Hacienda, sino por cuánta dignidad y libertad económica tiene su gente.
     `,
     slug: "IVA-herramienta-silenciosa",
     tags: ["Fiscalidad", "IVA", "Política económica"],
     date: "06/05/2025",
-    description: "Subida tras subida, el IVA se ha convertido en una forma silenciosa de ahogar al consumidor medio en España. Este artículo expone cómo la herramienta fiscal preferida de todos los gobiernos está asfixiando a quienes más contribuyen al país."
+    description: "El PSOE, el supuesto defensor del trabajador, fue quien implantó el IVA en España, empobreciendo al ciudadano común desde el primer día. Este artículo explica cómo este impuesto se ha convertido en una trampa silenciosa contra el consumidor, el autónomo y la economía real."
 }
+
 
 ];
 
