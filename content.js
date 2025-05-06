@@ -415,7 +415,7 @@ let content = [
         <strong>¿Qué ha pasado desde entonces?</strong><br>
         El IVA ha pasado del 12% original a un 21% en la actualidad, con subidas aplicadas tanto por el PSOE como por el PP. Y lo peor es que esas subidas afectan igual al que cobra 1.000 € que al que cobra 10.000 €. Porque el IVA lo pagamos todos... y cuanto menos tienes, más te duele.
         <br><br>
-        <img src="/assets/img/iva-subida.png" alt="Subida del IVA" class="img-fluid" /><br><br>
+        <img src="https://suzdalenko-dev.github.io/ia/img/3-0.png" alt="Subida del IVA" class="img-fluid" /><br><br>
 
         <h4>#1. Un impuesto regresivo que castiga a los que menos tienen</h4>
         Mientras los grandes capitales encuentran formas de evadir o aplazar impuestos, el IVA te lo quitan directamente en la caja del supermercado. ¿Compras leche, luz, transporte o productos básicos? Paga. ¿Te suben el IVA? No puedes esquivarlo. Es automático. Es diario.
