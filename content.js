@@ -443,7 +443,7 @@ let content = [
 
         <h3>¿Qué se podría hacer?</h3>
         <ul>
-          <li>✅ Bajar el IVA de los productos esenciales.</li>
+          <li>✅ Quitar el IVA de los productos esenciales.</li>
           <li>✅ Devolver parte del IVA a los salarios bajos vía deducciones o compensaciones.</li>
           <li>✅ Combatir el fraude fiscal en serio y no con campañas de marketing.</li>
           <li>✅ Hacer una reforma tributaria justa, donde todos paguen lo mismo en proporción, sin castigar a quien más trabaja o emprende. El esfuerzo no debe penalizarse con más impuestos, sino valorarse. En una economía sana, el autónomo y el empresario que tiran del país no deberían pagar por encima de su peso, sino tener estabilidad, reglas claras y un Estado que no los trate como enemigos.</li>
