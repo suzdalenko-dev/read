@@ -456,7 +456,7 @@ let content = [
         <br><br>
         Ya es hora de exigir una fiscalidad que no castigue al trabajador ni al emprendedor. Porque el verdadero progreso no se mide por cuánto recauda Hacienda, sino por cuánta dignidad y libertad económica tiene su gente.
     `,
-    slug: "IVA-herramienta-silenciosa",
+    slug: "IVA-España",
     tags: ["Fiscalidad", "IVA", "Política económica"],
     date: "06/05/2025",
     description: "El PSOE, el supuesto defensor del trabajador, fue quien implantó el IVA en España, empobreciendo al ciudadano común desde el primer día. Este artículo explica cómo este impuesto se ha convertido en una trampa silenciosa contra el consumidor, el autónomo y la economía real."
