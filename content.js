@@ -385,18 +385,7 @@ let content = [
         tags: ["Desarrollo", "IA", "JavaScript", "Perceptron"],
         date: "06/04/2025",
         description: `En este artículo, construimos una neurona artificial básica en JavaScript, entendiendo los conceptos clave de pesos, sesgos y funciones de activación. Hemos visto que el perceptrón puede aprender por sí solo a partir de datos, sin necesidad de que le demos reglas explícitas. La inteligencia artificial, en su núcleo, es una función matemática que transforma entradas en salidas mediante una serie de cálculos. En las redes neuronales, esto implica multiplicar cada entrada por un peso, sumar un sesgo y aplicar una función de activación para obtener una decisión. A través del aprendizaje, estos valores se ajustan automáticamente para mejorar la precisión del modelo.`
-    },
-     {
-        id: 2,
-        title: "Autentificación con JWT Token en Python Django",
-        preview: "https://suzdalenko-dev.github.io/ia/img/2-0.png",
-        content: `Autentificación con JWT Token en Python Django`,
-        slug:"Python-Django-JWT-Token",
-        tags: ["JWT", "Python", "Django", "Autentificación"],
-        date: "../../....",
-        description: "Autentificacion con JWT Token en Python Django"
-    },
-   {
+    },{
     id: 3,
     title: "IVA – herramienta silenciosa",
     preview: "https://suzdalenko-dev.github.io/ia/img/3-0.png",
@@ -460,7 +449,16 @@ let content = [
     tags: ["Fiscalidad", "IVA", "Política económica"],
     date: "06/05/2025",
     description: "El PSOE, el supuesto defensor del trabajador, fue quien implantó el IVA en España, empobreciendo al ciudadano común desde el primer día. Este artículo explica cómo este impuesto se ha convertido en una trampa silenciosa contra el consumidor, el autónomo y la economía real."
-}
+},{
+        id: 2,
+        title: "Autentificación con JWT Token en Python Django",
+        preview: "https://suzdalenko-dev.github.io/ia/img/2-0.png",
+        content: `Autentificación con JWT Token en Python Django`,
+        slug:"Python-Django-JWT-Token",
+        tags: ["JWT", "Python", "Django", "Autentificación"],
+        date: "../../....",
+        description: "Autentificacion con JWT Token en Python Django"
+},
 
 
 ];
