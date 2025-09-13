@@ -451,297 +451,53 @@ let content = [
     description: "El PSOE, el supuesto defensor del trabajador, fue quien implantó el IVA en España, empobreciendo al ciudadano común desde el primer día. Este artículo explica cómo este impuesto se ha convertido en una trampa silenciosa contra el consumidor, el autónomo y la economía real."
 },{
   id: 2,
-  title: "Autenticación en Django sin librerías externas (sesiones y token firmado HMAC)",
+  title: "JWT en Django sin librerías externas: de 0 a 100 (paso a paso claro)",
   preview: "https://suzdalenko-dev.github.io/ia/img/2-0.png",
   content: `
-  <p><img src="https://suzdalenko-dev.github.io/ia/img/2-0.png" alt="Autenticación en Django sin librerías externas" class="img-fluid" loading="lazy" width="1200" height="675"></p>
+  <p><img src="https://suzdalenko-dev.github.io/ia/img/2-0.png" alt="JWT en Django sin librerías externas" class="img-fluid" loading="lazy" width="1200" height="675"></p>
 
   <p>
-    Aquí te dejo una guía completa para implementar autenticación en <strong>Django puro</strong>, sin instalar librerías de terceros.
-    Te muestro dos enfoques:
+    Vamos a construir <strong>JWT</strong> en Django <strong>sin instalar librerías extra</strong> (nada de PyJWT ni SimpleJWT). Solo usamos:
+    <code>hmac</code>, <code>hashlib</code>, <code>base64</code>, <code>json</code> y el propio <code>django.contrib.auth</code>.
   </p>
-  <ul>
-    <li><strong>A) Sesiones de Django</strong> (lo más simple y seguro por defecto).</li>
-    <li><strong>B) Token propio firmado</strong> con <code>django.core.signing</code> (HMAC) para APIs sin estado.</li>
-  </ul>
 
-  <h3>🔁 Flujo general</h3>
+  <h3>Qué vas a entender (como si tuvieras 18 años):</h3>
   <ol>
-    <li>El usuario envía <em>usuario</em> y <em>contraseña</em> desde un formulario HTML o fetch.</li>
-    <li>El servidor valida con <code>django.contrib.auth.authenticate()</code>.</li>
-    <li>Si es correcto:
-      <ul>
-        <li><strong>Sesiones</strong>: se crea una sesión y se envía una cookie segura.</li>
-        <li><strong>Token</strong>: se genera un token firmado con expiración y se devuelve (o se pone en cookie HttpOnly).</li>
-      </ul>
-    </li>
-    <li>Las vistas protegidas verifican que el usuario esté autenticado (sesión) o que el token sea válido.</li>
-    <li>Logout: se cierra la sesión o se borra/invalida el token.</li>
+    <li><strong>El cliente</strong> (HTML/JS) manda <em>email</em> y <em>password</em> por <code>POST</code>.</li>
+    <li><strong>El servidor</strong> comprueba el usuario. Si ok, crea un <strong>JWT</strong>:
+      <em>header.payload.signature</em>, con firma HMAC-SHA256 usando tu <code>SECRET_KEY</code>.</li>
+    <li>Ese <strong>token</strong> se guarda en el cliente (en memoria o cookie HttpOnly) y se envía en las siguientes peticiones
+      (<code>Authorization: Bearer &lt;token&gt;</code> o cookie).</li>
+    <li>En cada <strong>GET/POST</strong> protegido, el servidor <em>verifica</em> la firma y la caducidad del token.
+      Si todo está bien, te deja hacer la acción.</li>
   </ol>
 
   <hr>
-  <h2>A) Autenticación con <u>Sesiones de Django</u> (recomendada)</h2>
+  <h2>1) Cliente: HTML + JavaScript (envía email y password)</h2>
 
-  <div class="vscode-header">settings.py (extracto)</div>
-  <div class="vscode-editor"><pre><code class="language-python">INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-]
-
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-]
-
-# Producción: activa HTTPS y cookies seguras
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = ["https://tu-dominio.com"]
-</code></pre></div>
-
-  <div class="vscode-header">templates/login.html</div>
   <div class="vscode-editor"><pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang="es"&gt;
-&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Login&lt;/title&gt;&lt;/head&gt;
+&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Login JWT&lt;/title&gt;&lt;/head&gt;
 &lt;body&gt;
-  &lt;h3&gt;Iniciar sesión&lt;/h3&gt;
-  &lt;form method="post" action="/login/"&gt;
-    {% csrf_token %}
-    &lt;label&gt;Usuario&lt;/label&gt;
-    &lt;input name="username" required&gt;
-    &lt;label&gt;Contraseña&lt;/label&gt;
-    &lt;input name="password" type="password" required&gt;
-    &lt;button type="submit"&gt;Entrar&lt;/button&gt;
-  &lt;/form&gt;
-  {% if form_error %}&lt;p style="color:red"&gt;{{ form_error }}&lt;/p&gt;{% endif %}
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></div>
-
-  <div class="vscode-header">urls.py</div>
-  <div class="vscode-editor"><pre><code class="language-python">from django.contrib import admin
-from django.urls import path
-from .views import login_view, logout_view, dashboard
-
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("login/", login_view, name="login"),
-    path("logout/", logout_view, name="logout"),
-    path("", dashboard, name="dashboard"),
-]
-</code></pre></div>
-
-  <div class="vscode-header">views.py (sesión)</div>
-  <div class="vscode-editor"><pre><code class="language-python">from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-
-def login_view(request):
-    if request.method == "GET":
-        return render(request, "login.html")
-
-    # POST
-    username = request.POST.get("username", "")
-    password = request.POST.get("password", "")
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        login(request, user)  # crea sesión y cookie segura
-        return redirect("dashboard")
-    return render(request, "login.html", {"form_error": "Credenciales inválidas"})
-
-@login_required
-def dashboard(request):
-    return render(request, "dashboard.html", {"user": request.user})
-
-def logout_view(request):
-    logout(request)  # borra la sesión del servidor
-    return redirect("login")
-</code></pre></div>
-
-  <p><strong>Notas de seguridad:</strong> Usa HTTPS, mantén <code>SECRET_KEY</code> seguro, y deja que Django gestione la cookie de sesión (HttpOnly + Secure). Las vistas con formularios deben incluir <code>{% csrf_token %}</code>.</p>
-
-  <hr>
-  <h2>B) API sin estado con <u>Token firmado (HMAC)</u> usando <code>django.core.signing</code></h2>
-  <p>
-    Si quieres un flujo tipo “Bearer token” (similar a JWT pero sin librerías externas), Django trae un firmador HMAC:
-    <code>TimestampSigner</code> y utilidades para serializar/firmar. Crearemos un token con <em>user_id</em> y un
-    <em>exp</em> (expiración), lo firmamos con tu <code>SECRET_KEY</code> y lo verificamos en cada petición.
-  </p>
-
-  <div class="vscode-header">core/auth_token.py</div>
-  <div class="vscode-editor"><pre><code class="language-python">import json, time, base64, hmac, hashlib
-from django.conf import settings
-from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
-from django.contrib.auth import get_user_model
-
-ALGO = "sha256"
-SIGNER_SALT = "my.api.token.v1"  # cambia si rompes compatibilidad
-TOKEN_MAX_AGE = 15 * 60          # 15 minutos (access)
-
-def _b64e(b: bytes) -> str:
-    return base64.urlsafe_b64encode(b).decode().rstrip("=")
-
-def _b64d(s: str) -> bytes:
-    pad = "=" * (-len(s) % 4)
-    return base64.urlsafe_b64decode(s + pad)
-
-def make_token(user_id: int, ttl: int = TOKEN_MAX_AGE) -> str:
-    payload = {
-        "uid": user_id,
-        "exp": int(time.time()) + ttl,
-        "iat": int(time.time()),
-    }
-    raw = json.dumps(payload, separators=(",", ":")).encode()
-    msg = _b64e(raw)
-
-    signer = TimestampSigner(key=settings.SECRET_KEY, salt=SIGNER_SALT)
-    signed = signer.sign(msg)  # msg:signature
-    return signed
-
-def check_token(token: str):
-    """
-    Devuelve instancia de usuario si el token es válido; si no, None.
-    """
-    signer = TimestampSigner(key=settings.SECRET_KEY, salt=SIGNER_SALT)
-    try:
-        # TimestampSigner no valida exp propio, valida edad si se pasa max_age en unsign
-        msg = signer.unsign(token, max_age=TOKEN_MAX_AGE)
-        payload = json.loads(_b64d(msg))
-        if payload.get("exp", 0) &lt; int(time.time()):
-            return None
-        User = get_user_model()
-        return User.objects.filter(id=payload.get("uid")).first()
-    except (BadSignature, SignatureExpired, json.JSONDecodeError):
-        return None
-</code></pre></div>
-
-  <div class="vscode-header">middleware.py (autenticación por Bearer)</div>
-  <div class="vscode-editor"><pre><code class="language-python">from django.utils.deprecation import MiddlewareMixin
-from django.contrib.auth.models import AnonymousUser
-from .core.auth_token import check_token
-
-class BearerAuthMiddleware(MiddlewareMixin):
-    """
-    Si encuentra Authorization: Bearer &lt;token&gt;, autentica request.user.
-    No sustituye a la sesión; es compatible.
-    """
-    def process_request(self, request):
-        auth = request.META.get("HTTP_AUTHORIZATION", "")
-        if auth.lower().startswith("bearer "):
-            token = auth.split(" ", 1)[1].strip()
-            user = check_token(token)
-            request.user = user or AnonymousUser()
-</code></pre></div>
-
-  <div class="vscode-header">settings.py (añade el middleware)</div>
-  <div class="vscode-editor"><pre><code class="language-python">MIDDLEWARE = [
-    # ...
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "tuapp.middleware.BearerAuthMiddleware",  # después de AuthenticationMiddleware
-]
-</code></pre></div>
-
-  <div class="vscode-header">views.py (login API, protected API)</div>
-  <div class="vscode-editor"><pre><code class="language-python">from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponseForbidden
-from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import AnonymousUser
-from .core.auth_token import make_token
-
-@csrf_exempt  # si usas fetch desde otro dominio sin cookies. Con cookies, configura CSRF.
-def api_login(request):
-    if request.method != "POST":
-        return JsonResponse({"detail": "Método no permitido"}, status=405)
-
-    import json
-    try:
-        body = json.loads(request.body or "{}")
-    except json.JSONDecodeError:
-        body = {}
-    user = authenticate(request, username=body.get("username",""), password=body.get("password",""))
-    if not user:
-        return JsonResponse({"detail": "Credenciales inválidas"}, status=401)
-
-    token = make_token(user.id)
-    # Puedes devolver en JSON...
-    return JsonResponse({"access": token, "user": {"id": user.id, "username": user.username}})
-
-def api_protected(request):
-    if not request.user or isinstance(request.user, AnonymousUser):
-        return HttpResponseForbidden("No autenticado")
-    return JsonResponse({"ok": True, "user": {"id": request.user.id, "username": request.user.username}})
-</code></pre></div>
-
-  <div class="vscode-header">urls.py (API)</div>
-  <div class="vscode-editor"><pre><code class="language-python">from django.urls import path
-from .views import api_login, api_protected
-
-urlpatterns += [
-    path("api/login/", api_login),
-    path("api/protected/", api_protected),
-]
-</code></pre></div>
-
-  <h4>💡 Variante: token en cookie HttpOnly</h4>
-  <p>Más seguro frente a XSS: en lugar de devolverlo en JSON, lo pones en una cookie HttpOnly + Secure:</p>
-  <div class="vscode-editor"><pre><code class="language-python">from django.http import JsonResponse
-
-def api_login_cookie(request):
-    # ... valida user con authenticate como arriba ...
-    token = make_token(user.id)
-    res = JsonResponse({"ok": True})
-    res.set_cookie("access", token, httponly=True, secure=True, samesite="Lax", max_age=15*60)
-    return res
-</code></pre></div>
-
-  <p>En este caso, tu middleware leería el token desde la cookie si no existe cabecera Authorization.</p>
-  <div class="vscode-editor"><pre><code class="language-python">class BearerAuthMiddleware(MiddlewareMixin):
-    def process_request(self, request):
-        token = None
-        auth = request.META.get("HTTP_AUTHORIZATION", "")
-        if auth.lower().startswith("bearer "):
-            token = auth.split(" ", 1)[1].strip()
-        elif "access" in request.COOKIES:
-            token = request.COOKIES.get("access")
-
-        from django.contrib.auth.models import AnonymousUser
-        from .core.auth_token import check_token
-        user = check_token(token) if token else None
-        request.user = user or AnonymousUser()
-</code></pre></div>
-
-  <h3>🧪 HTML de ejemplo (formulario + fetch)</h3>
-  <div class="vscode-editor"><pre><code class="language-html">&lt;!doctype html&gt;
-&lt;html lang="es"&gt;
-&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;Login API Token&lt;/title&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;form id="f"&gt;
-    &lt;input name="username" placeholder="usuario" required&gt;
-    &lt;input name="password" type="password" placeholder="contraseña" required&gt;
+  &lt;h3&gt;Login&lt;/h3&gt;
+  &lt;form id="loginForm"&gt;
+    &lt;input name="email" type="email" placeholder="email" required&gt;
+    &lt;input name="password" type="password" placeholder="password" required&gt;
     &lt;button&gt;Entrar&lt;/button&gt;
   &lt;/form&gt;
 
+  &lt;button id="btnGet" type="button"&gt;GET protegido&lt;/button&gt;
+  &lt;button id="btnPost" type="button"&gt;POST protegido&lt;/button&gt;
   &lt;pre id="out"&gt;&lt;/pre&gt;
 
   &lt;script&gt;
-    const out = document.querySelector('#out');
-    let accessToken = null;
+    let accessToken = null; // opción A: guardarlo en memoria (mejor que localStorage)
 
-    document.querySelector('#f').addEventListener('submit', async (e) =&gt; {
+    const out = document.querySelector('#out');
+    document.querySelector('#loginForm').addEventListener('submit', async (e) =&gt; {
       e.preventDefault();
       const fd = new FormData(e.target);
-      const body = JSON.stringify({ username: fd.get('username'), password: fd.get('password') });
+      const body = JSON.stringify({ email: fd.get('email'), password: fd.get('password') });
 
       const r = await fetch('/api/login/', {
         method: 'POST',
@@ -750,58 +506,260 @@ def api_login_cookie(request):
       });
       const j = await r.json();
       if (r.ok) {
-        accessToken = j.access; // si usas cookie HttpOnly, no guardes nada aquí
+        accessToken = j.access; // si decides usar cookie HttpOnly, no necesitas esto
         out.textContent = 'Login OK. Token guardado en memoria.';
       } else {
         out.textContent = 'Error: ' + (j.detail || r.status);
       }
     });
 
-    async function callProtected() {
-      const r = await fetch('/api/protected/', {
+    document.querySelector('#btnGet').addEventListener('click', async () =&gt; {
+      const r = await fetch('/api/todos/', {
         headers: accessToken ? { 'Authorization': 'Bearer ' + accessToken } : {}
       });
       out.textContent = await r.text();
-    }
+    });
+
+    document.querySelector('#btnPost').addEventListener('click', async () =&gt; {
+      const r = await fetch('/api/todos/', {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' },
+                               accessToken ? { 'Authorization': 'Bearer ' + accessToken } : {}),
+        body: JSON.stringify({ text: 'Comprar pan' })
+      });
+      out.textContent = await r.text();
+    });
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre></div>
 
-  <h3>🚪 Logout</h3>
+  <p><strong>¿Dónde guardo el token?</strong> Opciones:</p>
   <ul>
-    <li><strong>Sesión</strong>: llama a <code>logout(request)</code> y redirige.</li>
-    <li><strong>Token</strong>:
-      <ul>
-        <li>Si es en <em>header</em>, basta con que el cliente lo olvide (y usas expiración corta).</li>
-        <li>Si es en <em>cookie</em>, envía una cookie vacía con <code>max_age=0</code> para borrarla.</li>
-      </ul>
-    </li>
+    <li><strong>Memoria JS</strong> (como arriba): seguro contra “persistencia” (se borra al cerrar pestaña) y evita algunos ataques.</li>
+    <li><strong>Cookie HttpOnly + Secure</strong>: el JS no la lee (protege contra XSS) y se envía sola en cada request.</li>
+    <li><strong>localStorage</strong>: rápido, pero si te hacen XSS pueden robártelo. Mejor evitar si puedes.</li>
   </ul>
 
-  <div class="vscode-editor"><pre><code class="language-python">from django.http import JsonResponse
+  <hr>
+  <h2>2) Servidor: crear y verificar JWT (sin librerías externas)</h2>
 
-def api_logout_cookie(request):
-    res = JsonResponse({"ok": True})
-    res.delete_cookie("access")
-    return res
+  <p>Un JWT es así: <code>base64url(header).base64url(payload).base64url(firma)</code>. La firma es
+  <code>HMAC-SHA256(SECRET_KEY, header.payload)</code>.</p>
+
+  <div class="vscode-header">jwt_utils.py</div>
+  <div class="vscode-editor"><pre><code class="language-python"># jwt_utils.py
+import json, time, hmac, hashlib, base64
+from typing import Optional
+from django.conf import settings
+
+def _b64url_encode(b: bytes) -&gt; str:
+    return base64.urlsafe_b64encode(b).decode().rstrip("=")
+
+def _b64url_decode(s: str) -&gt; bytes:
+    pad = "=" * (-len(s) % 4)
+    return base64.urlsafe_b64decode(s + pad)
+
+def jwt_encode(payload: dict, secret: str = None, alg: str = "HS256") -&gt; str:
+    secret = secret or settings.SECRET_KEY
+    header = {"alg": alg, "typ": "JWT"}
+    h = _b64url_encode(json.dumps(header, separators=(",", ":")).encode())
+    p = _b64url_encode(json.dumps(payload, separators=(",", ":")).encode())
+    msg = f"{h}.{p}".encode()
+    sig = hmac.new((secret).encode(), msg, hashlib.sha256).digest()
+    s = _b64url_encode(sig)
+    return f"{h}.{p}.{s}"
+
+def jwt_decode(token: str, secret: str = None, verify_exp: bool = True) -&gt; Optional[dict]:
+    secret = secret or settings.SECRET_KEY
+    try:
+        h, p, s = token.split(".")
+    except ValueError:
+        return None
+    msg = f"{h}.{p}".encode()
+    expected_sig = hmac.new((secret).encode(), msg, hashlib.sha256).digest()
+    try:
+        got_sig = _b64url_decode(s)
+    except Exception:
+        return None
+    # compara sin filtrar tiempo (previene timing attacks)
+    if not hmac.compare_digest(expected_sig, got_sig):
+        return None
+    try:
+        payload = json.loads(_b64url_decode(p))
+    except Exception:
+        return None
+    if verify_exp and "exp" in payload and int(time.time()) &gt; int(payload["exp"]):
+        return None
+    return payload
 </code></pre></div>
 
-  <h3>🔐 Buenas prácticas</h3>
+  <p><strong>Campos importantes del payload</strong> que pondremos:</p>
   <ul>
-    <li>Siempre HTTPS.</li>
-    <li>Tokens de vida corta (p.ej. 15 min). Para “refresh” podrías emitir un segundo token con vida más larga y endpoint para renovarlo (mismo mecanismo de firma).</li>
-    <li>Si necesitas revocación inmediata de tokens (lista negra), guarda un <em>jti</em> (id único) en BD al hacer logout y compruébalo en <code>check_token</code>.</li>
-    <li>No guardes tokens en <code>localStorage</code> si puedes evitarlo. Mejor cookie HttpOnly o memoria (mientras dure la pestaña).</li>
+    <li><code>sub</code>: ID del usuario.</li>
+    <li><code>email</code>: email del usuario (opcional).</li>
+    <li><code>iat</code>: “issued at” (cuándo se emitió).</li>
+    <li><code>exp</code>: “expires at” (cuándo caduca). Ej: 15 minutos.</li>
   </ul>
 
-  <p><em>Conclusión:</em> con las <strong>sesiones</strong> de Django tienes autenticación robusta sin dependencias. Si necesitas una API sin estado, el <strong>token firmado con HMAC</strong> usando <code>django.core.signing</code> te da una alternativa ligera y totalmente “sin librerías externas”.</p>
+  <hr>
+  <h2>3) Endpoints Django</h2>
+
+  <div class="vscode-header">urls.py</div>
+  <div class="vscode-editor"><pre><code class="language-python">from django.urls import path
+from .views import api_login, api_todos
+
+urlpatterns = [
+    path("api/login/", api_login),   # POST: email+password → token
+    path("api/todos/", api_todos),   # GET/POST protegido con JWT
+]
+</code></pre></div>
+
+  <div class="vscode-header">views.py (login y rutas protegidas)</div>
+  <div class="vscode-editor"><pre><code class="language-python"># views.py
+import time, json
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponseNotAllowed
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, get_user_model
+from .jwt_utils import jwt_encode, jwt_decode
+
+ACCESS_TTL = 15 * 60  # 15 minutos
+
+@csrf_exempt  # si lo llamas desde otro dominio sin cookies; con cookies, configura CSRF
+def api_login(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+    try:
+        body = json.loads(request.body or "{}")
+    except json.JSONDecodeError:
+        body = {}
+    email = body.get("email", "")
+    password = body.get("password", "")
+
+    # Por defecto Django autentica con username; si usas email como username, perfecto.
+    # Si no, busca por email primero:
+    User = get_user_model()
+    try:
+        user_obj = User.objects.get(email=email)
+        username = user_obj.get_username()
+    except User.DoesNotExist:
+        return JsonResponse({"detail": "Credenciales inválidas"}, status=401)
+
+    user = authenticate(request, username=username, password=password)
+    if not user:
+        return JsonResponse({"detail": "Credenciales inválidas"}, status=401)
+
+    now = int(time.time())
+    payload = {
+        "sub": user.id,
+        "email": user.email,
+        "iat": now,
+        "exp": now + ACCESS_TTL
+    }
+    token = jwt_encode(payload)
+
+    # Opción A: devolver en JSON para usar en Authorization: Bearer
+    return JsonResponse({"access": token, "user": {"id": user.id, "email": user.email, "username": user.username}})
+
+    # Opción B: cookie HttpOnly (alternativa)
+    # res = JsonResponse({"ok": True})
+    # res.set_cookie("access", token, httponly=True, secure=True, samesite="Lax", max_age=ACCESS_TTL)
+    # return res
+
+# simulamos un "storage" en memoria para el ejemplo (en real: usa BD)
+TODOS = []
+
+def _get_token_from_request(request):
+    auth = request.META.get("HTTP_AUTHORIZATION", "")
+    if auth.lower().startswith("bearer "):
+        return auth.split(" ", 1)[1].strip()
+    # alternativa: leer cookie
+    # if "access" in request.COOKIES: return request.COOKIES["access"]
+    return None
+
+def _require_jwt(request):
+    token = _get_token_from_request(request)
+    if not token:
+        return None
+    payload = jwt_decode(token)
+    return payload  # None si inválido o caducado
+
+def api_todos(request):
+    payload = _require_jwt(request)
+    if not payload:
+        return HttpResponseForbidden("No autenticado o token inválido/caducado")
+
+    if request.method == "GET":
+        # devuelve todos del usuario
+        uid = payload["sub"]
+        user_todos = [t for t in TODOS if t["user_id"] == uid]
+        return JsonResponse(user_todos, safe=False)
+
+    if request.method == "POST":
+        try:
+            body = json.loads(request.body or "{}")
+        except json.JSONDecodeError:
+            body = {}
+        text = body.get("text", "").strip()
+        if not text:
+            return JsonResponse({"detail": "Falta 'text'"}, status=400)
+        item = {"id": len(TODOS) + 1, "text": text, "user_id": payload["sub"]}
+        TODOS.append(item)
+        return JsonResponse(item, status=201)
+
+    return HttpResponseNotAllowed(["GET", "POST"])
+</code></pre></div>
+
+  <p><strong>Qué pasa exactamente en las peticiones protegidas (GET/POST)</strong>:</p>
+  <ol>
+    <li>El cliente manda <code>Authorization: Bearer &lt;token&gt;</code> (o cookie).</li>
+    <li>El servidor <em>extrae el token</em> y llama a <code>jwt_decode()</code>:
+      <ul>
+        <li>Recalcula la firma HMAC con tu <code>SECRET_KEY</code>.</li>
+        <li>Compara firma con <code>compare_digest</code> (seguro).</li>
+        <li>Lee el <code>payload</code> y comprueba <code>exp</code> (caducidad).</li>
+      </ul>
+    </li>
+    <li>Si todo está OK, tienes el <code>sub</code> (id del usuario) y puedes hacer la acción (listar/crear/editar...).</li>
+    <li>Si falla, respondes <code>401/403</code> y el cliente debe volver a loguearse o refrescar.</li>
+  </ol>
+
+  <hr>
+  <h2>4) Dónde guardar el JWT (resumen rápido)</h2>
+  <ul>
+    <li><strong>Memoria JS</strong>: sencillo y evita persistir secretos. Si cierras pestaña, se borra.</li>
+    <li><strong>Cookie HttpOnly + Secure</strong>: más resistente a XSS (el JS no puede leerla). Configura CORS/CSRF si front y back están en dominios distintos.</li>
+    <li><strong>No recomendado</strong>: <code>localStorage</code> para tokens sensibles.</li>
+  </ul>
+
+  <hr>
+  <h2>5) Preguntas típicas</h2>
+  <p><strong>¿Y el “Refresh token”?</strong> No es obligatorio. Si quieres, crea otro JWT con vida larga (p.ej. 7 días) y un endpoint
+  para pedir un nuevo <em>access</em> cuando caduque. Misma firma HMAC. También puedes revocar refresh guardando una lista en BD.</p>
+  <p><strong>¿Es seguro?</strong> Sí, si:</p>
+  <ul>
+    <li>Firmas con <code>SECRET_KEY</code> fuerte y <strong>HTTPS</strong> siempre.</li>
+    <li>Usas caducidades cortas (<code>exp</code> ~ 15 min) para el access.</li>
+    <li>Prefieres cookie HttpOnly o memoria JS antes que localStorage.</li>
+  </ul>
+
+  <hr>
+  <h2>6) Lo esencial, mentalmente (modo 18 años):</h2>
+  <ul>
+    <li>Entras con email/contraseña → el server te da una “tarjeta de acceso” (el <strong>JWT</strong>).</li>
+    <li>En cada petición enseñas tu “tarjeta” (header o cookie).</li>
+    <li>El server comprueba que la tarjeta no esté <em>falsificada</em> (firma) ni <em>caducada</em> (exp).</li>
+    <li>Si todo bien, pasas. Si no, fuera y vuelve a loguearte.</li>
+  </ul>
+
+  <p><em>Listo. Eso es JWT sin bibliotecas adicionales en Django: claro, corto y funcionando.</em></p>
   `,
-  slug: "autenticacion-django-sin-librerias",
-  tags: ["Python","Django","Autenticación","Sin librerías"],
+  slug: "jwt-django-sin-librerias",
+  tags: ["JWT","Python","Django","Sin librerías","Seguridad"],
   date: "13/09/2025",
-  description: "Cómo implementar autenticación en Django sin librerías externas: sesiones clásicas y un token propio firmado (HMAC) con django.core.signing. Código listo, HTML y flujo completo."
+  description: "Cómo crear y verificar JWT en Django sin librerías externas: login con email y password, firma HMAC, almacenamiento del token y verificación en peticiones GET/POST protegidas."
 }
+
 
 
 ];
